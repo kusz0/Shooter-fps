@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] int damageAmount = 1;
+
     StarterAssetsInputs starterAssetsInputs;
 
     private void Awake()
@@ -11,26 +13,31 @@ public class Weapon : MonoBehaviour
        starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
     }
 
-    int i = 1;
 
+    private void Update()
+    {
+        HandleShoot();
+    }
 
-    void Update()
+    private void HandleShoot()
     {
 
-        if (starterAssetsInputs.shoot)
+        if (!starterAssetsInputs.shoot)
         {
-            RaycastHit hit;
-            if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out hit,Mathf.Infinity))
-            {
-                Debug.Log(hit.collider.name +  i);
-                i++;
-            }else 
-            {
-                Debug.Log($"Its null {i}");
-            }
-            starterAssetsInputs.ShootInput(false);
+            return;
         }
-
-
+         
+        RaycastHit hit;
+        
+        if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out hit,Mathf.Infinity))
+        {
+           EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+            enemyHealth?.TakeDamage(damageAmount);    
+        
+        }
+            starterAssetsInputs.ShootInput(false);
+        
     }
+    
+
 }
