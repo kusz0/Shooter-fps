@@ -1,9 +1,11 @@
 using StarterAssets;
+using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] GameObject hitVFXPrefab;
     [SerializeField] Animator animator;
     [SerializeField] ParticleSystem shootEffect;
     [SerializeField] int damageAmount = 1;
@@ -35,15 +37,21 @@ public class Weapon : MonoBehaviour
         starterAssetsInputs.ShootInput(false);
 
         RaycastHit hit;
-        
+
         if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out hit,Mathf.Infinity))
         {
+           VfXEffectHandle(hit);
            EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-            enemyHealth?.TakeDamage(damageAmount);    
+           enemyHealth?.TakeDamage(damageAmount);    
         
         }
-        
     }
-    
+    private void VfXEffectHandle(RaycastHit hit)
+    {
+        Vector3 vector3 = hit.point;
+
+        Instantiate(hitVFXPrefab, vector3,quaternion.identity);
+    }
+
 
 }
