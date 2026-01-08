@@ -970,6 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a65e7087a59ea4487f4718727a92a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  hitVFXPrefab: {fileID: 5629974631653489506, guid: 6595448a2fea4b649827493eed44d253, type: 3}
   animator: {fileID: 1298898146}
   shootEffect: {fileID: 1051392721}
   damageAmount: 1
